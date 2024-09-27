@@ -1,12 +1,11 @@
 <script setup lang="ts">
 const showHelpdesk = ref(false)
 const showKB = ref(false)
-
 </script>
 
 <template>
   <aside
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white
+    class="fixed top-0 left-0 z-30 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white
       border-r border-gray-200 sm:translate-x-0"
   >
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
@@ -25,10 +24,10 @@ const showKB = ref(false)
         </li>
         <li>
           <button
-            @click="showHelpdesk = !showHelpdesk"
             type="button"
             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg
               group hover:bg-gray-100"
+            @click="showHelpdesk = !showHelpdesk"
           >
             <Icon
               name="mdi:help-box"
@@ -36,34 +35,34 @@ const showKB = ref(false)
             />
             <span class="flex-1 ms-3 text-left whitespace-nowrap">Helpdesk</span>
             <Icon
-                v-if="showHelpdesk"
+              v-if="showHelpdesk"
               name="mdi:chevron-up"
               class="w-6 h-6"
-              />
+            />
             <Icon
-                v-else
-                name="mdi:chevron-down"
-                class="w-6 h-6"
+              v-else
+              name="mdi:chevron-down"
+              class="w-6 h-6"
             />
           </button>
           <ul v-if="showHelpdesk" class="py-2 space-y-2">
             <li>
               <button
-                @click="showKB = !showKB"
                 type="button"
                 class="flex items-center w-full p-2 pl-10 text-base text-gray-900 transition duration-75 rounded-lg
                   group hover:bg-gray-100"
+                @click="showKB = !showKB"
               >
                 <span class="flex-1 ms-3 text-left whitespace-nowrap">Knowledge Base</span>
                 <Icon
-                    v-if="showKB"
-                    name="mdi:chevron-up"
-                    class="w-6 h-6"
+                  v-if="showKB"
+                  name="mdi:chevron-up"
+                  class="w-6 h-6"
                 />
                 <Icon
-                    v-else
-                    name="mdi:chevron-down"
-                    class="w-6 h-6"
+                  v-else
+                  name="mdi:chevron-down"
+                  class="w-6 h-6"
                 />
               </button>
               <ul v-if="showKB" class="py-2 space-y-2">
@@ -77,13 +76,13 @@ const showKB = ref(false)
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <NuxtLink
+                    to="/helpdesk/kb/categories"
                     class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-20 group
                       hover:bg-gray-100"
                   >
                     Categories
-                  </a>
+                  </NuxtLink>
                 </li>
               </ul>
             </li>

@@ -13,6 +13,12 @@ Packages:
 * @vueuse/nuxt
 * @vueuse/core
 * @vueuse/components
+* pinia
+* @pinia/nuxt
+* vue3-toastify
+* @nuxt/eslint
+* typescript
+* eslint
 
 ## Done:
 Auth Pages:
@@ -22,3 +28,7 @@ Auth Pages:
 
 Dashboard:
 * Layout
+* Kb Categories Page
+
+## TODO:
+* Extract components for re-usability

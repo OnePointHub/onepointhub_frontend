@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import {useForm, useFieldError} from 'vee-validate'
+import { useFieldError, useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 definePageMeta({
   layout: 'auth',
-  middleware: ['sanctum:guest']
+  middleware: ['sanctum:guest'],
 })
 
 /* Form Validation Rules */
 const formSchema = yup.object().shape({
   email: yup
-      .string()
-      .required('The email field is required.')
-      .email('Email must be a valid email address.'),
+    .string()
+    .required('The email field is required.')
+    .email('Email must be a valid email address.'),
 })
 
 /* Initialize Form */
-const {defineField, handleSubmit, meta} = useForm({
+const { defineField, handleSubmit, meta } = useForm({
   initialValues: {
     email: '',
   },
-  validationSchema: formSchema
+  validationSchema: formSchema,
 })
 
 /* Form Data */
@@ -35,7 +35,7 @@ const loading = ref(false)
 const errMessage = ref()
 const successMessage = ref()
 
-const onSubmit = handleSubmit(async values => {
+const onSubmit = handleSubmit(async (values) => {
   errMessage.value = ''
   const credentials = {
     email: values.email,
@@ -48,11 +48,12 @@ const onSubmit = handleSubmit(async values => {
       body: credentials,
     })
     successMessage.value = 'We have emailed your password reset link.'
-  } catch (e) {
+  }
+  catch (e) {
     const error = useApiError(e)
 
     if (error.isValidationError) {
-      errMessage.value = (error.bag['email'][0])
+      errMessage.value = (error.bag.email[0])
       loading.value = false
       return
     }
@@ -65,8 +66,8 @@ const onSubmit = handleSubmit(async values => {
 <template>
   <div class="w-96 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
     <form
-        class="space-y-6"
-        @submit.prevent="onSubmit"
+      class="space-y-6"
+      @submit.prevent="onSubmit"
     >
       <div class="mb-4">
         <h5 class="text-xl text-center font-bold text-primary">
@@ -78,57 +79,58 @@ const onSubmit = handleSubmit(async values => {
         </small>
       </div>
       <small
-          :class="successMessage ? 'text-success text-sm pb-4' : ''"
+        :class="successMessage ? 'text-success text-sm pb-4' : ''"
       >
         {{ successMessage }}
       </small>
       <div>
-
         <label
-            for="email"
-            class="block mb-2 text-sm font-medium"
-            :class="[ emailErr ? 'text-error': 'text-main']"
+          for="email"
+          class="block mb-2 text-sm font-medium"
+          :class="[emailErr ? 'text-error' : 'text-main']"
         >
           Your email
         </label>
         <input
-            v-model="email"
-            type="email"
-            name="email"
-            id="email"
-            class="border text-sm rounded-lg focus:outline-none focus:border-2 block w-full p-2.5"
-            :class="[ emailErr
-              ? 'bg-error-50 border-error text-error placeholder-error focus:border-error'
-              : 'bg-background border-secondary text-main focus:border-primary']"
-
-        />
+          id="email"
+          v-model="email"
+          type="email"
+          name="email"
+          class="border text-sm rounded-lg focus:outline-none focus:border-2 block w-full p-2.5"
+          :class="[emailErr
+            ? 'bg-error-50 border-error text-error placeholder-error focus:border-error'
+            : 'bg-background border-secondary text-main focus:border-primary']"
+        >
         <p
-            v-show="errMessage"
-            class="mt-2 text-sm text-error"
+          v-show="errMessage"
+          class="mt-2 text-sm text-error"
         >
           {{ errMessage }}
         </p>
         <p
-            v-show="emailErr"
-            class="mt-2 text-sm text-error"
+          v-show="emailErr"
+          class="mt-2 text-sm text-error"
         >
           {{ emailErr }}
         </p>
       </div>
       <button
-          :disabled="!meta.valid"
-          type="submit"
-          class="w-full text-white bg-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center
+        :disabled="!meta.valid"
+        type="submit"
+        class="w-full text-white bg-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center
           hover:shadow-primary hover:shadow-sm hover:bg-primary
           transition duration-150 ease-in-out active:bg-primary-600 active:shadow-primary-600
           motion-reduce:transition-none
           disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-main disabled:shadow-none"
       >
         <span v-if="loading">
-          <Icon name="mdi:loading" class="animate-spin w-4 h-4"/>
+          <Icon
+            name="mdi:loading"
+            class="animate-spin w-4 h-4"
+          />
         </span>
         <span v-else>
-        Email Password Reset Link
+          Email Password Reset Link
         </span>
       </button>
     </form>

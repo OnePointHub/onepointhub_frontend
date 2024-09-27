@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Navbar from '~/layouts/components/dashboard/navbar.vue'
-import Sidebar from "~/layouts/components/dashboard/sidebar.vue";
-
+import Sidebar from '~/layouts/components/dashboard/sidebar.vue'
 </script>
 
 <template>
@@ -11,9 +10,8 @@ import Sidebar from "~/layouts/components/dashboard/sidebar.vue";
 
     <div class="p-4 sm:ml-64">
       <div class="p-4 mt-14">
-        <slot/>
+        <slot />
       </div>
     </div>
-
   </div>
 </template>

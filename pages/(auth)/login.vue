@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useForm, useFieldError} from 'vee-validate'
+import { useFieldError, useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 definePageMeta({
@@ -22,24 +22,24 @@ onMounted(() => {
 /* Form Validation Rules */
 const formSchema = yup.object().shape({
   email: yup
-      .string()
-      .required('The email field is required.')
-      .email('Email must be a valid email address.'),
+    .string()
+    .required('The email field is required.')
+    .email('Email must be a valid email address.'),
   password: yup
-      .string()
-      .required('The password field is required.'),
+    .string()
+    .required('The password field is required.'),
   remember: yup
-      .boolean()
+    .boolean(),
 })
 
 /* Initialize Form */
-const {defineField, handleSubmit, meta} = useForm({
+const { defineField, handleSubmit, meta } = useForm({
   initialValues: {
     email: '',
     password: '',
     remember: false,
   },
-  validationSchema: formSchema
+  validationSchema: formSchema,
 })
 
 /* Form Data */
@@ -52,10 +52,10 @@ const emailErr = useFieldError('email')
 const passwordErr = useFieldError('password')
 
 /* Form Submit */
-const {login} = useSanctumAuth()
+const { login } = useSanctumAuth()
 const loginError = ref()
 
-const onSubmit = handleSubmit(async values => {
+const onSubmit = handleSubmit(async (values) => {
   loginError.value = ''
   const credentials = {
     email: values.email,
@@ -65,11 +65,12 @@ const onSubmit = handleSubmit(async values => {
 
   try {
     await login(credentials)
-  } catch (e) {
+  }
+  catch (e) {
     const error = useApiError(e)
 
     if (error.isValidationError) {
-      loginError.value = (error.bag['email'][0])
+      loginError.value = (error.bag.email[0])
       return
     }
     console.error('Request failed not because of a validation', error.code)
@@ -80,8 +81,8 @@ const onSubmit = handleSubmit(async values => {
 <template>
   <div class="w-96 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
     <form
-        class="space-y-6"
-        @submit.prevent="onSubmit"
+      class="space-y-6"
+      @submit.prevent="onSubmit"
     >
       <div class="mb-4">
         <h5 class="text-xl text-center font-bold text-primary">
@@ -89,63 +90,62 @@ const onSubmit = handleSubmit(async values => {
         </h5>
       </div>
       <small
-          :class="successMessage ? 'text-success text-sm pb-4' : ''"
+        :class="successMessage ? 'text-success text-sm pb-4' : ''"
       >
         {{ successMessage }}
       </small>
       <div>
         <label
-            for="email"
-            class="block mb-2 text-sm font-medium"
-            :class="[ emailErr ? 'text-error': 'text-main']"
+          for="email"
+          class="block mb-2 text-sm font-medium"
+          :class="[emailErr ? 'text-error' : 'text-main']"
         >
           Your email
         </label>
         <input
-            v-model="email"
-            type="email"
-            name="email"
-            id="email"
-            class="border text-sm rounded-lg focus:outline-none focus:border-2 block w-full p-2.5"
-            :class="[ emailErr
-              ? 'bg-error-50 border-error text-error placeholder-error focus:border-error'
-              : 'bg-background border-secondary text-main focus:border-primary']"
-
-        />
+          id="email"
+          v-model="email"
+          type="email"
+          name="email"
+          class="border text-sm rounded-lg focus:outline-none focus:border-2 block w-full p-2.5"
+          :class="[emailErr
+            ? 'bg-error-50 border-error text-error placeholder-error focus:border-error'
+            : 'bg-background border-secondary text-main focus:border-primary']"
+        >
         <p
-            v-show="loginError"
-            class="mt-2 text-sm text-error"
+          v-show="loginError"
+          class="mt-2 text-sm text-error"
         >
           {{ loginError }}
         </p>
         <p
-            v-show="emailErr"
-            class="mt-2 text-sm text-error"
+          v-show="emailErr"
+          class="mt-2 text-sm text-error"
         >
           {{ emailErr }}
         </p>
       </div>
       <div>
         <label
-            for="password"
-            class="block mb-2 text-sm font-medium"
-            :class="[ passwordErr ? 'text-error': 'text-main']"
+          for="password"
+          class="block mb-2 text-sm font-medium"
+          :class="[passwordErr ? 'text-error' : 'text-main']"
         >
           Your password
         </label>
         <input
-            v-model="password"
-            type="password"
-            name="password"
-            id="password"
-            class="border text-sm rounded-lg focus:outline-none focus:border-2 block w-full p-2.5"
-            :class="[ passwordErr
-              ? 'bg-error-50 border-error text-error placeholder-error focus:border-error'
-              : 'bg-background border-secondary text-main focus:border-primary']"
-        />
+          id="password"
+          v-model="password"
+          type="password"
+          name="password"
+          class="border text-sm rounded-lg focus:outline-none focus:border-2 block w-full p-2.5"
+          :class="[passwordErr
+            ? 'bg-error-50 border-error text-error placeholder-error focus:border-error'
+            : 'bg-background border-secondary text-main focus:border-primary']"
+        >
         <p
-            v-show="passwordErr"
-            class="mt-2 text-sm text-error"
+          v-show="passwordErr"
+          class="mt-2 text-sm text-error"
         >
           {{ passwordErr }}
         </p>
@@ -154,29 +154,30 @@ const onSubmit = handleSubmit(async values => {
         <div class="flex items-start">
           <div class="flex items-center h-5">
             <input
-                v-model="remember"
-                id="remember"
-                type="checkbox"
-                class="w-4 h-4 accent-primary"
-            />
+              id="remember"
+              v-model="remember"
+              type="checkbox"
+              class="w-4 h-4 accent-primary"
+            >
           </div>
           <label
-              for="remember"
-              class="ms-2 text-sm font-medium text-main"
+            for="remember"
+            class="ms-2 text-sm font-medium text-main"
           >
             Remember me
           </label>
         </div>
-        <NuxtLink to="/forgot-password"
-            class="ms-auto text-sm text-secondary hover:text-primary hover:underline"
+        <NuxtLink
+          to="/forgot-password"
+          class="ms-auto text-sm text-secondary hover:text-primary hover:underline"
         >
           Lost Password?
         </NuxtLink>
       </div>
       <button
-          :disabled="!meta.valid"
-          type="submit"
-          class="w-full text-white bg-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center
+        :disabled="!meta.valid"
+        type="submit"
+        class="w-full text-white bg-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center
           hover:shadow-primary hover:shadow-sm hover:bg-primary
           transition duration-150 ease-in-out active:bg-primary-600 active:shadow-primary-600
           motion-reduce:transition-none
