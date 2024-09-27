@@ -10,9 +10,15 @@ Packages:
 * @vee-validate/nuxt
 * @vee-validate/yup
 * yup
+* @vueuse/nuxt
+* @vueuse/core
+* @vueuse/components
 
 ## Done:
 Auth Pages:
 * Login
 * Forgot Password
 * Reset Password
+
+Dashboard:
+* Layout
